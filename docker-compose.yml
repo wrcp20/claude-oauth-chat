@@ -1,0 +1,13 @@
+services:
+  chat-claude:
+    build: .
+    container_name: chat-claude-oauth
+    ports:
+      - "3200:3200"
+    volumes:
+      # Monta tus credenciales OAuth de Claude Code (solo lectura)
+      - ${USERPROFILE}/.claude:/root/.claude:ro
+    environment:
+      - PORT=3200
+      - NODE_ENV=production
+    restart: unless-stopped
