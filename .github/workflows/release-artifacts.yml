@@ -44,7 +44,7 @@ jobs:
     name: Notificar en Discord
     runs-on: ubuntu-latest
     needs: build-flutter-web
-    if: ${{ secrets.DISCORD_WEBHOOK_URL != '' }}
+    continue-on-error: true
     steps:
       - name: Enviar notificación
         uses: sarisia/actions-status-discord@v1
