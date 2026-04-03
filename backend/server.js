@@ -246,3 +246,5 @@ app.listen(PORT, () => {
   console.log('  CORS:', ALLOWED_ORIGINS);
   console.log('  Calentando en background... 1er mensaje ~2-4s después de "lista"\n');
 });
+
+const broken = {
