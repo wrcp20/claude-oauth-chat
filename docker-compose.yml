@@ -12,14 +12,3 @@ services:
       - NODE_ENV=production
       - ALLOWED_ORIGINS=*
     restart: unless-stopped
-
-  frontend:
-    image: nginx:alpine
-    container_name: chat-claude-frontend
-    ports:
-      - "8080:80"
-    volumes:
-      - ./frontend/web:/usr/share/nginx/html:ro
-    depends_on:
-      - backend
-    restart: unless-stopped
