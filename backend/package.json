@@ -1,7 +1,6 @@
 {
-  "name": "chat-claude042026",
+  "name": "chat-claude-backend",
   "version": "1.0.0",
-  "description": "Chat web local usando OAuth credentials de Claude Code",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

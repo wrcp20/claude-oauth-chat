@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chat Claude</title>
+  <link rel="manifest" href="manifest.json">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -313,7 +314,11 @@
   <p class="hint">Enter para enviar · Shift+Enter para nueva línea</p>
 </footer>
 
+<!-- config.js define window.CLAUDE_API_URL — editar para cambiar el backend -->
+<script src="config.js"></script>
 <script>
+  const API_URL = window.CLAUDE_API_URL || 'http://localhost:3200';
+
   const messagesEl = document.getElementById('messages');
   const inputEl = document.getElementById('input');
   const sendBtn = document.getElementById('send-btn');
@@ -329,10 +334,10 @@
 
   async function checkStatus() {
     try {
-      const r = await fetch('/api/status');
+      const r = await fetch(`${API_URL}/api/status`);
       const d = await r.json();
       if (d.ok) {
-        statusBadge.textContent = `${d.subscriptionType} · OAuth`;
+        statusBadge.textContent = `${d.model?.split('-')[1] || 'claude'} · OAuth`;
         statusBadge.className = 'ok';
       } else {
         statusBadge.textContent = 'sin credenciales';
@@ -433,7 +438,7 @@
     let fullText = '';
 
     try {
-      const resp = await fetch('/api/chat', {
+      const resp = await fetch(`${API_URL}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -518,15 +523,13 @@
         <p>Empezá una conversación con Claude</p>
         <small>Usando tus credenciales OAuth de Claude Code · Sin consumir API key</small>
       </div>`;
-    // Reiniciar la sesión persistente en el server
-    await fetch('/api/reset', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({}) });
+    await fetch(`${API_URL}/api/reset`, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({}) });
     inputEl.focus();
   });
 
-  // Cambio de modelo → reiniciar sesión con nuevo modelo
   modelSelect.addEventListener('change', async () => {
     history = [];
-    await fetch('/api/reset', {
+    await fetch(`${API_URL}/api/reset`, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({ model: modelSelect.value })
@@ -535,6 +538,11 @@
     statusBadge.className = '';
     setTimeout(checkStatus, 3000);
   });
+
+  // ── Service Worker (PWA) ───────────────────────────────────────────────────
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
 </script>
 </body>
 </html>

@@ -4,9 +4,24 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3200;
+const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS || '*';
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+
+// ── CORS ───────────────────────────────────────────────────────────────────────
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (ALLOWED_ORIGINS === '*') {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+  } else if (origin && ALLOWED_ORIGINS.split(',').map(o => o.trim()).includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.sendStatus(204);
+  next();
+});
 
 // ── Sesión persistente con probe de calentamiento ──────────────────────────────
 //
@@ -194,6 +209,8 @@ const session = new ClaudeSession('claude-haiku-4-5-20251001');
 
 // ── Routes ─────────────────────────────────────────────────────────────────────
 
+app.get('/health', (req, res) => res.json({ status: 'ok' }));
+
 app.get('/api/status', (req, res) => res.json(session.status()));
 
 app.post('/api/reset', (req, res) => {
@@ -224,7 +241,8 @@ app.post('/api/chat', (req, res) => {
 // ── Start ──────────────────────────────────────────────────────────────────────
 
 app.listen(PORT, () => {
-  console.log(`\n✓ Chat Claude → http://localhost:${PORT}`);
+  console.log(`\n✓ API Claude → http://localhost:${PORT}`);
   console.log('  Modelo: Haiku (rápido y económico)');
+  console.log('  CORS:', ALLOWED_ORIGINS);
   console.log('  Calentando en background... 1er mensaje ~2-4s después de "lista"\n');
 });
