@@ -1,0 +1,9 @@
+{
+  "appId": "com.local.chatclaude",
+  "appName": "Chat Claude",
+  "webDir": "../web",
+  "server": {
+    "url": "http://TU_IP_LOCAL:3200",
+    "cleartext": true
+  }
+}

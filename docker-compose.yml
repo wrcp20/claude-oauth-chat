@@ -1,7 +1,7 @@
 services:
-  chat-claude:
-    build: .
-    container_name: chat-claude-oauth
+  backend:
+    build: ./backend
+    container_name: chat-claude-backend
     ports:
       - "3200:3200"
     volumes:
@@ -10,4 +10,16 @@ services:
     environment:
       - PORT=3200
       - NODE_ENV=production
+      - ALLOWED_ORIGINS=*
+    restart: unless-stopped
+
+  frontend:
+    image: nginx:alpine
+    container_name: chat-claude-frontend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend/web:/usr/share/nginx/html:ro
+    depends_on:
+      - backend
     restart: unless-stopped
