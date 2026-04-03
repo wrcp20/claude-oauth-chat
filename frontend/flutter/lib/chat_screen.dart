@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'api_service.dart';
 import 'config.dart';
 
@@ -223,7 +223,7 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('✦', style: TextStyle(fontSize: 48, color: Colors.white.withOpacity(0.15))),
+            Text('✦', style: TextStyle(fontSize: 48, color: Colors.white.withValues(alpha: 0.15))),
             const SizedBox(height: 12),
             const Text(
               'Empezá una conversación con Claude',
@@ -232,7 +232,7 @@ class _ChatScreenState extends State<ChatScreen> {
             const SizedBox(height: 4),
             Text(
               'Via OAuth · Sin consumir API key',
-              style: TextStyle(fontSize: 12, color: const Color(0xFF7C80A0).withOpacity(0.6)),
+              style: TextStyle(fontSize: 12, color: const Color(0xFF7C80A0).withValues(alpha: 0.6)),
             ),
           ],
         ),
@@ -280,7 +280,7 @@ class _ChatScreenState extends State<ChatScreen> {
               onPressed: _isStreaming ? null : _sendMessage,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF7C6AF5),
-                disabledBackgroundColor: const Color(0xFF7C6AF5).withOpacity(0.4),
+                disabledBackgroundColor: const Color(0xFF7C6AF5).withValues(alpha: 0.4),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 padding: EdgeInsets.zero,
               ),
@@ -451,7 +451,7 @@ class _TypingIndicatorState extends State<_TypingIndicator>
             child: Container(
               width: 6, height: 6,
               decoration: BoxDecoration(
-                color: const Color(0xFF7C80A0).withOpacity(0.4 + 0.6 * (1 - (offset.abs() / 5))),
+                color: const Color(0xFF7C80A0).withValues(alpha: 0.4 + 0.6 * (1 - (offset.abs() / 5))),
                 shape: BoxShape.circle,
               ),
             ),
