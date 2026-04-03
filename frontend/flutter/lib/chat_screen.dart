@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'api_service.dart';
 import 'config.dart';
 
@@ -351,14 +352,48 @@ class _MessageBubble extends StatelessWidget {
         ),
         child: message.isStreaming
             ? const _TypingIndicator()
-            : SelectableText(
-                message.content,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFFE2E4F0),
-                  height: 1.6,
-                ),
-              ),
+            : isUser
+                ? SelectableText(
+                    message.content,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFFE2E4F0),
+                      height: 1.6,
+                    ),
+                  )
+                : MarkdownBody(
+                    data: message.content,
+                    selectable: true,
+                    styleSheet: MarkdownStyleSheet(
+                      p: const TextStyle(fontSize: 14, color: Color(0xFFE2E4F0), height: 1.6),
+                      strong: const TextStyle(fontSize: 14, color: Color(0xFFC4B5FD), fontWeight: FontWeight.bold),
+                      em: const TextStyle(fontSize: 14, color: Color(0xFFA5B4FC), fontStyle: FontStyle.italic),
+                      h1: const TextStyle(fontSize: 18, color: Color(0xFFE2E4F0), fontWeight: FontWeight.w600),
+                      h2: const TextStyle(fontSize: 16, color: Color(0xFFE2E4F0), fontWeight: FontWeight.w600),
+                      h3: const TextStyle(fontSize: 14, color: Color(0xFFE2E4F0), fontWeight: FontWeight.w600),
+                      code: const TextStyle(
+                        fontSize: 12,
+                        color: Color(0xFFA5F3FC),
+                        fontFamily: 'monospace',
+                        backgroundColor: Color(0xFF0D0F18),
+                      ),
+                      codeblockDecoration: BoxDecoration(
+                        color: const Color(0xFF0D0F18),
+                        border: Border.all(color: const Color(0xFF2E3250)),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      blockquoteDecoration: const BoxDecoration(
+                        border: Border(left: BorderSide(color: Color(0xFF7C6AF5), width: 3)),
+                      ),
+                      blockquotePadding: const EdgeInsets.only(left: 12),
+                      blockquoteContentColor: const Color(0xFF7C80A0),
+                      horizontalRuleDecoration: const BoxDecoration(
+                        border: Border(top: BorderSide(color: Color(0xFF2E3250))),
+                      ),
+                      a: const TextStyle(color: Color(0xFF9585F8)),
+                      listBullet: const TextStyle(color: Color(0xFFE2E4F0)),
+                    ),
+                  ),
       ),
     );
   }
