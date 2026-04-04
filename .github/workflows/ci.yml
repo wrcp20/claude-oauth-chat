@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  backend:
+    name: Backend — sintaxis y dependencias
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Instalar dependencias
+        run: npm ci
+        working-directory: backend
+
+      - name: Verificar sintaxis
+        run: node --check server.js
+        working-directory: backend
+
+  flutter:
+    name: Flutter — analyze + build web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.x'
+          channel: 'stable'
+          cache: true
+
+      - name: Instalar dependencias
+        run: flutter pub get
+        working-directory: frontend/flutter
+
+      - name: Analizar código
+        run: flutter analyze
+        working-directory: frontend/flutter
+
+      - name: Build web
+        run: flutter build web --dart-define=API_URL=http://localhost:3200
+        working-directory: frontend/flutter

@@ -1,0 +1,6 @@
+{
+  "name": "claude-oauth-chat",
+  "version": "1.0.0",
+  "description": "Chat web local usando OAuth credentials de Claude Code — sin API key",
+  "private": true
+}

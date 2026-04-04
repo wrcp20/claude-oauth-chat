@@ -1,0 +1,15 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "package-name": "claude-oauth-chat",
+      "changelog-sections": [
+        { "type": "feat", "section": "Nuevas funcionalidades" },
+        { "type": "fix", "section": "Correcciones" },
+        { "type": "chore", "section": "Mantenimiento", "hidden": false },
+        { "type": "docs", "section": "Documentación", "hidden": false },
+        { "type": "refactor", "section": "Refactorización", "hidden": false }
+      ]
+    }
+  }
+}
