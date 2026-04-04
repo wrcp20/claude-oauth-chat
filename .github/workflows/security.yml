@@ -1,8 +1,11 @@
 name: Security Review
 
 on:
-  pull_request:
-    branches: [main]
+  # Requiere ANTHROPIC_API_KEY en GitHub Secrets para activarse
+  # Descomentar cuando el secret esté configurado:
+  # pull_request:
+  #   branches: [main]
+  workflow_dispatch: # solo manual por ahora
 
 jobs:
   security-review:
