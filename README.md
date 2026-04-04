@@ -6,6 +6,16 @@ Chat web que reutiliza las **credenciales OAuth de Claude Code** sin necesidad d
 
 ---
 
+## Capturas
+
+![Chat con respuesta markdown](docs/screenshots/chat1.jpg)
+*Conversación activa — respuestas con formato markdown, selector de modelo y badge de estado OAuth*
+
+![Respuesta larga con listas y código](docs/screenshots/chat2.jpg)
+*Renderizado de listas, código inline y texto enriquecido en tiempo real*
+
+---
+
 ## Tabla de contenido
 
 - [Cómo funciona](#cómo-funciona)
