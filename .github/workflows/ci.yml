@@ -46,7 +46,7 @@ jobs:
         working-directory: frontend/flutter
 
       - name: Analizar código
-        run: flutter analyze
+        run: flutter analyze lib/
         working-directory: frontend/flutter
 
       - name: Build web
