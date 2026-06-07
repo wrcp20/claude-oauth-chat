@@ -1,6 +1,6 @@
 const express = require('express');
 const { spawn } = require('child_process');
-const path = require('path');
+const path    = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3200;
@@ -18,7 +18,7 @@ app.use((req, res, next) => {
     res.setHeader('Vary', 'Origin');
   }
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   if (req.method === 'OPTIONS') return res.sendStatus(204);
   next();
 });
@@ -207,9 +207,27 @@ class ClaudeSession {
 // Haiku: modelo más rápido y económico
 const session = new ClaudeSession('claude-haiku-4-5-20251001');
 
+// ── Token Auth ────────────────────────────────────────────────────────────────
+const API_TOKEN = process.env.API_TOKEN || null;
+
+if (API_TOKEN) {
+  app.use('/api', (req, res, next) => {
+    const auth = req.headers['authorization'] || '';
+    if (auth !== `Bearer ${API_TOKEN}`) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+    next();
+  });
+}
+
 // ── Routes ─────────────────────────────────────────────────────────────────────
 
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
+
+app.get('/widget.js', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript');
+  res.sendFile(path.resolve(__dirname, '../widget/chat-widget.js'));
+});
 
 app.get('/api/status', (req, res) => res.json(session.status()));
 
