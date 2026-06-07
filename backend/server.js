@@ -1,6 +1,6 @@
 const express = require('express');
 const { spawn } = require('child_process');
-const path = require('path');
+const path    = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3200;
@@ -210,6 +210,11 @@ const session = new ClaudeSession('claude-haiku-4-5-20251001');
 // ── Routes ─────────────────────────────────────────────────────────────────────
 
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
+
+app.get('/widget.js', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript');
+  res.sendFile(path.resolve(__dirname, '../widget/chat-widget.js'));
+});
 
 app.get('/api/status', (req, res) => res.json(session.status()));
 

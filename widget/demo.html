@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo — Claude OAuth Widget</title>
+  <style>
+    body { font-family: sans-serif; background: #1a1a2e; color: #e8e6f0; padding: 40px; }
+    h1   { color: #a78bfa; margin-bottom: 8px; }
+    p    { color: #8882aa; margin-bottom: 24px; }
+    pre  {
+      background: #0f0f13;
+      border: 1px solid #2e2e48;
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 13px;
+      color: #b8c0d8;
+      overflow-x: auto;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      background: rgba(76,175,125,0.15);
+      color: #4caf7d;
+    }
+    .badge.warn { background: rgba(240,180,80,0.15); color: #f0b450; }
+  </style>
+</head>
+<body>
+
+  <h1>✦ Claude OAuth — Widget Demo</h1>
+  <p>El widget aparece en la esquina inferior derecha. El backend usa tus credenciales OAuth de Claude Code.</p>
+
+  <h2 style="color:#7c6af5; font-size:15px;">Integración en tu página PHP (2 líneas)</h2>
+  <pre>&lt;!-- Antes del &lt;/body&gt; --&gt;
+&lt;script&gt;
+  window.CLAUDE_CHAT_CONFIG = {
+    apiUrl:      'http://localhost:3200',
+    title:       'Asistente',
+    placeholder: 'Escribí tu consulta...',
+    position:    'bottom-right',
+  };
+&lt;/script&gt;
+&lt;script src="http://localhost:3200/widget.js"&gt;&lt;/script&gt;</pre>
+
+  <p>Estado del backend: <span class="badge warn" id="badge">verificando...</span></p>
+
+  <!-- ── Integración del widget ── -->
+  <script>
+    window.CLAUDE_CHAT_CONFIG = {
+      apiUrl:      'http://localhost:3200',
+      title:       'Asistente Claude',
+      placeholder: 'Escribí tu consulta...',
+      position:    'bottom-right',
+    };
+  </script>
+  <script src="http://localhost:3200/widget.js"></script>
+
+  <script>
+    fetch('http://localhost:3200/api/status')
+      .then(r => r.json())
+      .then(d => {
+        const b = document.getElementById('badge');
+        b.textContent = d.ready ? 'backend online ✓' : 'backend sin sesión';
+        b.className   = d.ready ? 'badge' : 'badge warn';
+      })
+      .catch(() => {
+        const b = document.getElementById('badge');
+        b.textContent = 'backend offline ✗';
+        b.className   = 'badge warn';
+      });
+  </script>
+
+</body>
+</html>
