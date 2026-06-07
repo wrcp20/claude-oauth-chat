@@ -16,6 +16,10 @@
 (function () {
   'use strict';
 
+  // Leer config del meta tag inyectado por la extensión Chrome (evita bloqueos CSP)
+  const metaTag = document.querySelector('meta[name="__claude-oauth-config"]');
+  const metaCfg = metaTag ? JSON.parse(metaTag.getAttribute('content') || '{}') : {};
+
   const cfg = Object.assign(
     {
       apiUrl:      'http://localhost:3200',
@@ -24,6 +28,7 @@
       position:    'bottom-right',
       token:       '',
     },
+    metaCfg,
     window.CLAUDE_CHAT_CONFIG || {}
   );
 
