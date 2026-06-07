@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Claude OAuth Chat</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+  <div class="header">
+    <span class="icon">✦</span>
+    <span class="title">Claude OAuth Chat</span>
+    <span class="badge" id="status-badge">offline</span>
+  </div>
+
+  <div class="form">
+    <label>URL del servidor</label>
+    <input type="text" id="apiUrl" placeholder="http://localhost:3200">
+
+    <label>Token de acceso</label>
+    <input type="text" id="token" placeholder="Tu API_TOKEN del .env">
+
+    <label>Título del widget</label>
+    <input type="text" id="title" placeholder="Asistente Claude">
+
+    <label>Posición</label>
+    <select id="position">
+      <option value="bottom-right">Abajo derecha</option>
+      <option value="bottom-left">Abajo izquierda</option>
+    </select>
+
+    <div class="toggle-row">
+      <label>Activar en todas las páginas</label>
+      <input type="checkbox" id="enabled">
+    </div>
+  </div>
+
+  <div class="actions">
+    <button id="save-btn">Guardar</button>
+    <span class="saved-msg" id="saved-msg">✓ Guardado</span>
+  </div>
+
+  <div class="footer">
+    El servidor debe estar corriendo localmente con<br>
+    <code>API_TOKEN=... node backend/server.js</code>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
