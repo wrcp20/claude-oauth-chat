@@ -207,6 +207,19 @@ class ClaudeSession {
 // Haiku: modelo más rápido y económico
 const session = new ClaudeSession('claude-haiku-4-5-20251001');
 
+// ── Token Auth ────────────────────────────────────────────────────────────────
+const API_TOKEN = process.env.API_TOKEN || null;
+
+if (API_TOKEN) {
+  app.use('/api', (req, res, next) => {
+    const auth = req.headers['authorization'] || '';
+    if (auth !== `Bearer ${API_TOKEN}`) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+    next();
+  });
+}
+
 // ── Routes ─────────────────────────────────────────────────────────────────────
 
 app.get('/health', (req, res) => res.json({ status: 'ok' }));

@@ -22,6 +22,7 @@
       title:       'Asistente Claude',
       placeholder: 'Escribí tu consulta...',
       position:    'bottom-right',
+      token:       '',
     },
     window.CLAUDE_CHAT_CONFIG || {}
   );
@@ -448,9 +449,13 @@
     return div;
   }
 
+  function authHeaders() {
+    return cfg.token ? { 'Authorization': `Bearer ${cfg.token}` } : {};
+  }
+
   async function checkStatus() {
     try {
-      const r    = await fetch(`${cfg.apiUrl}/api/status`);
+      const r    = await fetch(`${cfg.apiUrl}/api/status`, { headers: authHeaders() });
       const data = await r.json();
       setStatus(data.ok && data.ready);
     } catch { setStatus(false); }
@@ -480,7 +485,7 @@
     try {
       const response = await fetch(`${cfg.apiUrl}/api/chat`, {
         method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders() },
         body:    JSON.stringify({ messages: history }),
       });
 

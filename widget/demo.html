@@ -41,6 +41,7 @@
     title:       'Asistente',
     placeholder: 'Escribí tu consulta...',
     position:    'bottom-right',
+    token:       'TU_API_TOKEN_AQUI',
   };
 &lt;/script&gt;
 &lt;script src="http://localhost:3200/widget.js"&gt;&lt;/script&gt;</pre>
@@ -54,12 +55,16 @@
       title:       'Asistente Claude',
       placeholder: 'Escribí tu consulta...',
       position:    'bottom-right',
+      token:       '09903ba2f76e05d91505bdee66633e910e24d06656a6697cb08f93e5f2dadec9',
     };
   </script>
   <script src="http://localhost:3200/widget.js"></script>
 
   <script>
-    fetch('http://localhost:3200/api/status')
+    const TOKEN = '09903ba2f76e05d91505bdee66633e910e24d06656a6697cb08f93e5f2dadec9';
+    fetch('http://localhost:3200/api/status', {
+      headers: { 'Authorization': 'Bearer ' + TOKEN }
+    })
       .then(r => r.json())
       .then(d => {
         const b = document.getElementById('badge');
