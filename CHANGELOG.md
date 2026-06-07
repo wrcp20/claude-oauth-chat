@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.1.0](https://github.com/wrcp20/claude-oauth-chat/compare/v1.0.0...v1.1.0) (2026-06-07)
+
+
+### Features
+
+* **auth:** agregar token Bearer para proteger endpoints /api/* ([e1ac1c0](https://github.com/wrcp20/claude-oauth-chat/commit/e1ac1c0233767e055c76f5f3c8c98b3340fab9ff))
+* **chrome-extension:** agregar extensión Chrome con widget OAuth ([5f221c0](https://github.com/wrcp20/claude-oauth-chat/commit/5f221c02c7acab47fc900134717cef03d9d5330f))
+* extensión Chrome para widget Claude OAuth en cualquier página ([68da5ad](https://github.com/wrcp20/claude-oauth-chat/commit/68da5adeb54eb08028b0c35c535bce9e2af7e680))
+* widget embebible con autenticación Bearer para páginas PHP ([89bb2fa](https://github.com/wrcp20/claude-oauth-chat/commit/89bb2fad009c0c04ad2983bed8f3288b7f1498e2))
+* **widget:** agregar widget embebible para integración en páginas PHP ([9f8a7e1](https://github.com/wrcp20/claude-oauth-chat/commit/9f8a7e190760f0d7bebda0c42dfedf4d5837943d))
+
+
+### Bug Fixes
+
+* **auth:** agregar Authorization header en frontend y extensión Chrome ([bf3f1c8](https://github.com/wrcp20/claude-oauth-chat/commit/bf3f1c8b9a0565b412bbf04845aba4d1ea9a5a5e))
+* **cors:** agregar Authorization a Access-Control-Allow-Headers ([64a3ee7](https://github.com/wrcp20/claude-oauth-chat/commit/64a3ee7dc79bd043b885b280ced909364142ba35))
+* resolver 401 en frontend web y extensión Chrome ([fbc6992](https://github.com/wrcp20/claude-oauth-chat/commit/fbc6992411d8bcb79207aff84b67aee5d371ce8e))
+
 ## 1.0.0 (2026-04-03)
 
 
